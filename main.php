@@ -75,7 +75,7 @@
 			<img src="images/twitterlogo.jpg" class="img-rounded" title="Twitter" width="80px" height="80px">
 			<h2><strong>See what's happening in <br> the world right now</strong></h2><br><br>
 			<h4><strong>Join Twitter Today.</strong></h4>
-			<!-- <form method="post" action="">
+			<form method="post" action="">
 				<button id="signup" class="btn btn-info btn-lg" name="signup">Sign up</button><br><br>
 				<?php
 					if(isset($_POST['signup'])){
@@ -88,7 +88,7 @@
 						echo "<script>window.open('signin.php','_self')</script>";
 					}
 				?>
-			</form> -->
+			</form>
 		</div>
 	</div>
 </body>
