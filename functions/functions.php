@@ -18,60 +18,23 @@ function insertPost(){
 			echo "<script>alert('Please Use 140 or less than 140 words!')</script>";
 			echo "<script>window.open('home.php', '_self')</script>";
 		}else{
-			if(strlen($upload_image) >= 1 && strlen($content) >= 1){
-				move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
-				$insert = "insert into posts (user_id, post_content, upload_image, post_date) values('$user_id', '$content', '$upload_image.$random_number', NOW())";
+			$insert = "insert into posts (user_id, post_content, post_date) values('$user_id', '$content', NOW())";
+			$run = mysqli_query($con, $insert);
 
-				$run = mysqli_query($con, $insert);
+			if($run){
+				echo "<script>alert('Your Post updated a moment ago!')</script>";
+				echo "<script>window.open('home.php', '_self')</script>";
 
-				if($run){
-					echo "<script>alert('Your Post updated a moment ago!')</script>";
-					echo "<script>window.open('home.php', '_self')</script>";
-
-					$update = "update users set posts='yes' where user_id='$user_id'";
-					$run_update = mysqli_query($con, $update);
-				}
-
-				exit();
-			}else{
-				if($upload_image=='' && $content == ''){
-					echo "<script>alert('Error Occured while uploading!')</script>";
-					echo "<script>window.open('home.php', '_self')</script>";
-				}else{
-					if($content==''){
-						move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
-						$insert = "insert into posts (user_id,post_content,upload_image,post_date) values ('$user_id','No','$upload_image.$random_number',NOW())";
-						$run = mysqli_query($con, $insert);
-
-						if($run){
-							echo "<script>alert('Your Post updated a moment ago!')</script>";
-							echo "<script>window.open('home.php', '_self')</script>";
-
-							$update = "update users set posts='yes' where user_id='$user_id'";
-							$run_update = mysqli_query($con, $update);
-						}
-
-						exit();
-					}else{
-						$insert = "insert into posts (user_id, post_content, post_date) values('$user_id', '$content', NOW())";
-						$run = mysqli_query($con, $insert);
-
-						if($run){
-							echo "<script>alert('Your Post updated a moment ago!')</script>";
-							echo "<script>window.open('home.php', '_self')</script>";
-
-							$update = "update users set posts='yes' where user_id='$user_id'";
-							$run_update = mysqli_query($con, $update);
-						}
-					}
+				$update = "update users set posts='yes' where user_id='$user_id'";
+				$run_update = mysqli_query($con, $update);
 				}
 			}
-		}
 	}
 }
 
+
 //for searching people
-function search_user(){
+function search_user($temp){
 	global $con;
 	if (isset($_GET['search_user_btn'])) {
 		$search_query = htmlentities($_GET['search_user']);
@@ -88,6 +51,11 @@ function search_user(){
 		$l_name = $row_user['l_name'];
 		$username = $row_user['user_name'];
 		$user_image = $row_user['user_image'];
+		$user_mail = $row_user['user_email'];
+
+		if ($user_mail == $temp){
+			continue;
+		};
 
 		echo"
 		<div class='row'>
@@ -115,5 +83,71 @@ function search_user(){
 		";
 	}
 }
+
+//for getting posts in the home page
+function get_posts(){
+	global $con;
+	$per_page = 4;
+
+	if(isset($_GET['page'])){
+		$page = $_GET['page'];
+	}else{
+		$page=1;
+	}
+
+	$start_from = ($page-1) * $per_page;
+
+	$get_posts = "select * from posts ORDER by 1 DESC LIMIT $start_from, $per_page";
+
+	$run_posts = mysqli_query($con, $get_posts);
+
+	while($row_posts = mysqli_fetch_array($run_posts)){
+
+		$post_id = $row_posts['post_id'];
+		$user_id = $row_posts['user_id'];
+		$content = substr($row_posts['post_content'], 0,40);
+		$post_date = $row_posts['post_date'];
+
+		$user = "select *from users where user_id='$user_id' AND posts='yes'";
+		$run_user = mysqli_query($con,$user);
+		$row_user = mysqli_fetch_array($run_user);
+
+		$user_name = $row_user['user_name'];
+		$user_image = $row_user['user_image'];
+
+		//now displaying posts from database
+
+		echo"
+		<div class='row'>
+			<div class='col-sm-3'>
+			</div>
+			<div id='posts' class='col-sm-6'>
+				<div class='row'>
+					<div class='col-sm-2'>
+					<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p>
+					</div>
+					<div class='col-sm-6'>
+						<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+					</div>
+					<div class='col-sm-4'>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-sm-12'>
+						<h3><p>$content</p></h3>
+					</div>
+				</div><br>
+				<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+			</div>
+			<div class='col-sm-3'>
+			</div>
+		</div><br><br>
+		";
+	}
+
+	include("pagination.php");
+}
+
 
 ?>

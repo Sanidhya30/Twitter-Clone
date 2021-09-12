@@ -48,25 +48,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/twitter/functions/functions.php');
 	        <li><a href='user_profile.php?<?php echo "u_id=$user_id" ?>'><?php echo "$first_name"; ?></a></li>
 	       	<li><a href="home.php">Home</a></li>
 			<li><a href="members.php">Find People</a></li>
-
-
-					<?php
-						echo"
-
-						<li class='dropdown'>
-							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span><i class='glyphicon glyphicon-chevron-down'></i></span></a>
-							<ul class='dropdown-menu'>
-								<li>
-									<a href='my_post.php?u_id=$user_id'>My Posts <span class='badge badge-secondary'>$posts</span></a>
-								</li>
-								<li role='separator' class='divider'></li>
-								<li>
-									<a href='logout.php'>Logout</a>
-								</li>
-							</ul>
-						</li>
-						";
-					?>
+			<li><a href='logout.php'>Logout</a></li>
 			</ul>
 		</div>
 	</div>

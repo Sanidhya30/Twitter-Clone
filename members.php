@@ -33,7 +33,9 @@ if(!isset($_SESSION['user_email'])){
             <div class="col-sm-4">
             </div>
         </div><br><br>
-        <?php search_user(); ?>
+        <?php 
+        $temp = $_SESSION['user_email'];
+        search_user($temp); ?>
     </div>
 </div>
 </body>
