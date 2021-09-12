@@ -60,3 +60,7 @@ form.search_form::after{
     clear: both;
     display: table;
 }
+#posts{
+	border: 5px solid #e6e6e6;
+	padding: 40px 50px;
+}
