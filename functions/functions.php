@@ -96,8 +96,9 @@ function get_posts(){
 	}
 
 	$start_from = ($page-1) * $per_page;
+	$temp = $_SESSION['user_id'];
 
-	$get_posts = "select * from posts ORDER by 1 DESC LIMIT $start_from, $per_page";
+	$get_posts = "select * from posts where user_id IN (select follow_id from follows where user_id=$temp) or user_id=$temp ORDER by 1 DESC LIMIT $start_from, $per_page";
 
 	$run_posts = mysqli_query($con, $get_posts);
 
@@ -105,7 +106,7 @@ function get_posts(){
 
 		$post_id = $row_posts['post_id'];
 		$user_id = $row_posts['user_id'];
-		$content = substr($row_posts['post_content'], 0,40);
+		$content = substr($row_posts['post_content'], 0,140);
 		$post_date = $row_posts['post_date'];
 
 		$user = "select *from users where user_id='$user_id' AND posts='yes'";
@@ -138,7 +139,6 @@ function get_posts(){
 						<h3><p>$content</p></h3>
 					</div>
 				</div><br>
-				<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
 			</div>
 			<div class='col-sm-3'>
 			</div>

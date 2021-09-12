@@ -69,7 +69,7 @@ if(!isset($_SESSION['user_email'])){
                         <ul class='list-group'>
                             <li class='list-group-item' title='Username'><strong>$f_name $l_name</strong></li>
                             <li class='list-group-item' title='Gender'><strong>$gender</strong></li>
-                            <li class='list-group-item' title='Country'><strong>$gender</strong></li>
+                            <li class='list-group-item' title='Country'><strong>$country</strong></li>
                             <li class='list-group-item' title='User Registration Date'><strong>$register_date</strong></li>";
 
 
