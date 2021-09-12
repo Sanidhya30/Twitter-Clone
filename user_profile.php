@@ -55,6 +55,7 @@ if(!isset($_SESSION['user_email'])){
                 $country = $row['user_country'];
                 $gender = $row['user_gender'];
                 $register_date = $row['user_reg_date'];
+                $user_email = $row['user_email'];
 
                 echo"
                     <div class='row'>
@@ -69,11 +70,48 @@ if(!isset($_SESSION['user_email'])){
                             <li class='list-group-item' title='Username'><strong>$f_name $l_name</strong></li>
                             <li class='list-group-item' title='Gender'><strong>$gender</strong></li>
                             <li class='list-group-item' title='Country'><strong>$gender</strong></li>
-                            <li class='list-group-item' title='User Registration Date'><strong>$register_date</strong></li>
-                        </ul>
-                    </div>
-                    </center>
-                ";
+                            <li class='list-group-item' title='User Registration Date'><strong>$register_date</strong></li>";
+
+
+                            if ($_SESSION['user_email'] != $user_email){
+                                $temp_id = $_SESSION['user_id'];
+                                $get_friends = "select * from follows where user_id=$temp_id and follow_id=$user_id";
+                                // echo "$temp_id,$user_id";
+                                $run_friends = mysqli_query($con, $get_friends);
+                                $results = mysqli_num_rows($run_friends);
+                            
+                                if($results == 1){
+                                    echo "
+                                    <li class='list-group-item' title='Follow'>
+                                    <form action='' method='post'>
+                                        <button type='submit' class='btn btn-primary' value='0' name='follow_btn'>Unfollow</button>
+                                    </form>    
+                                    </li>
+                                    </ul>
+                                    </div>
+                                    </center>
+                                    ";
+                                }
+                                else{
+                                    echo "
+                                    <li class='list-group-item' title='Follow'>
+                                    <form action='' method='post'>
+                                        <button type='submit' class='btn btn-primary' value='1' name='follow_btn'>Follow</button>
+                                    </form>   
+                                    </li>
+                                    </ul>
+                                    </div>
+                                    </center>
+                                    ";
+                                }
+                            }
+                            else{
+                                echo "
+                                </ul>
+                                </div>
+                                </center>
+                                ";
+                            };
             }
         ?>
         <div class="col-sm-8">
@@ -100,7 +138,7 @@ if(!isset($_SESSION['user_email'])){
                     $f_name = $row_user['f_name'];
                     $l_name = $row_user['l_name'];
                     $user_image = $row_user['user_image'];
-                    
+
                     echo"
                         <div id='own_posts'>
                             <div class='row'>
@@ -130,3 +168,7 @@ if(!isset($_SESSION['user_email'])){
 <?php } ?>
 </body>
 </html>
+
+<?php
+follow($user_id);
+?>

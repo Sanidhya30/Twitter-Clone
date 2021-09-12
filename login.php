@@ -13,7 +13,12 @@ include("includes/connection.php");
 		$check_user = mysqli_num_rows($query);
 
 		if($check_user == 1){
+			$select_id = "select 'user_id' from users where user_email=='$email";
+			$query= mysqli_query($con, $select_user);
+			$row_user = mysqli_fetch_array($query);
+			echo $row_user['user_id'];
 			$_SESSION['user_email'] = $email;
+			$_SESSION['user_id'] = $row_user['user_id'];
 
 			echo "<script>window.open('home.php', '_self')</script>";
 		}else{

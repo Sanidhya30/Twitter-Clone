@@ -149,5 +149,21 @@ function get_posts(){
 	include("pagination.php");
 }
 
-
+//for following people
+function follow($user_id){
+	global $con;
+	if (isset($_POST['follow_btn'])) {
+		if ($_POST['follow_btn'] == 1){
+			$temp = $_SESSION['user_id'];
+			$insert = "insert into follows(user_id,follow_id) values($temp, $user_id)";
+			$query = mysqli_query($con, $insert);
+		}
+		else{
+			$temp = $_SESSION['user_id'];
+			$delete = "delete from follows where user_id=$temp and follow_id=$user_id";
+			$query = mysqli_query($con, $delete);
+		}
+		echo "<meta http-equiv='refresh' content='0'>";
+	};
+}
 ?>
