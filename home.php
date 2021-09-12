@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-include("includes/connection.php");
+include("includes/header.php");
 
 if(!isset($_SESSION['user_email'])){
 	header("location: index.php");
@@ -36,14 +36,14 @@ if(!isset($_SESSION['user_email'])){
 		</label>
 		<button id="btn-post" class="btn btn-success" name="sub">Post</button>
 		</form>
-		<!-- implementation of inserting post -->
+		<?php insertPost(); ?>
 		</center>
 	</div>
 </div>
 <div class="row">
 	<div class="col-sm-12">
 		<center><h2><strong>News Feed</strong></h2><br></center>
-		<!-- implementation of fetching users post -->
+		<!-- <?php echo get_posts(); ?> -->
 	</div>
 </div>
 </body>
