@@ -9,7 +9,6 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <style>
-	/* add borders */
 	body{
 		overflow-x: hidden;
 	}
@@ -17,9 +16,12 @@
 		width: 50%;
 		height: 40%;
 		margin: 10px auto;
+		background-color: #fff;
+		border: 2px solid #e6e6e6;
 		padding: 40px 50px;
 	}
 	.header{
+		border: 0px solid #000;
 		margin-bottom: 5px;
 	}
 	.well{
@@ -48,6 +50,7 @@
 				<form action="" method="post">
 					<input type="email" name="email" placeholder="Email" required="required" class="form-control input-md"><br>
 					<input type="password" name="pass" placeholder="Password" required="required" class="form-control input-md"><br>
+					<a style="text-decoration: none;float: right;color: #187FAB;" data-toggle="tooltip" title="Create Account!" href="signup.php">Don't have an account?</a><br><br>
 
 					<center><button id="signin" class="btn btn-info btn-lg" name="login">Login</button></center>
 					<?php include("login.php"); ?>

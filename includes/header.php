@@ -14,7 +14,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/twitter/functions/functions.php');
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="home.php">NetLink</a>
+			<a class="navbar-brand" href="home.php">Twitter</a>
 		</div>
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -45,9 +45,9 @@ include($_SERVER['DOCUMENT_ROOT'].'/twitter/functions/functions.php');
 			$posts = mysqli_num_rows($run_posts);
 			?>
 
-	        <li><a href='profile.php?<?php echo "u_id=$user_id" ?>'><?php echo "$first_name"; ?></a></li>
-	       	<li><a href="#">Home</a></li>
-			<li><a href="#">Find People</a></li>
+	        <li><a href='user_profile.php?<?php echo "u_id=$user_id" ?>'><?php echo "$first_name"; ?></a></li>
+	       	<li><a href="home.php">Home</a></li>
+			<li><a href="members.php">Find People</a></li>
 
 
 					<?php
@@ -58,9 +58,6 @@ include($_SERVER['DOCUMENT_ROOT'].'/twitter/functions/functions.php');
 							<ul class='dropdown-menu'>
 								<li>
 									<a href='my_post.php?u_id=$user_id'>My Posts <span class='badge badge-secondary'>$posts</span></a>
-								</li>
-								<li>
-									<a href='edit_profile.php?u_id=$user_id'>Edit Account</a>
 								</li>
 								<li role='separator' class='divider'></li>
 								<li>
